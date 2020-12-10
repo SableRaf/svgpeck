@@ -11,9 +11,6 @@ If you enjoy it, you can [buy me a coffee](https://ko-fi.com/sableraph/).
 🦜
 R.
 
-![Line sketch of a bird drawing a bird on the floor with a quill while another bird is watching](https://github.com/SableRaf/svgpeck/blob/main/images/202012010_write.png "Trace")
-
-
 ## Setup
 - Install [Processing](http://processing.org/).
 - Clone this repository
@@ -31,4 +28,5 @@ R.
 ## Notes
 SVG files are automatically saved in an _SVG folder inside the Processing sketch folder.
 
-## Known bugs
+
+![Line sketch of a bird drawing a bird on the floor with a quill while another bird is watching](https://github.com/SableRaf/svgpeck/blob/main/images/202012010_write.png "Trace")
