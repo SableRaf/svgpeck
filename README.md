@@ -29,4 +29,4 @@ R.
 SVG files are automatically saved in an _SVG folder inside the Processing sketch folder.
 
 
-![Line sketch of a bird drawing a bird on the floor with a quill while another bird is watching](https://github.com/SableRaf/svgpeck/blob/main/images/202012010_write.png "Trace")
+![Line sketch of a bird drawing a bird on the floor with a quill while another bird is watching](https://github.com/SableRaf/svgpeck/blob/main/images/birds.png "Trace")
