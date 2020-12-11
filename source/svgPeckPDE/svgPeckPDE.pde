@@ -30,7 +30,6 @@ import processing.svg.*;
 
 final float LAZY_RADIUS_MIN = 2.0;
 final float LAZY_RADIUS_MAX = 20.0;
-final float SMOOTHING_MIN = 3.0;
 final float SMOOTHING_MIN = 1.0;
 final float SMOOTHING_MAX = 20.0;
 final float STROKE_WEIGHT = 2;
