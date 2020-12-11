@@ -1,15 +1,18 @@
-# svgpeck
+# SVGpeck
 
 Sketch directly with vectors using a mouse or pen tablet. Save your drawings as SVG. 
 
 If you own a pen plotter and you like to draw, this might be for you.
 
-Note: SVGpeck is a minimalist piece of software with a very narrow use case. I couldn't find any other tool that did what I needed so I built it for my own use (sending my birdie doodles to an AxiDraw). I hope some of you find it helpful too.
-
-If you enjoy it, you can [buy me a coffee](https://ko-fi.com/sableraph/).
+Note: SVGpeck is a minimalist piece of software with a very narrow use case. I couldn't find any tool that did precisely what I needed so I built it for my own usage (sending my birdie doodles to an AxiDraw). I hope some of you find it helpful too.
 
 🦜
 R.
+
+PS: If you enjoy SVGpeck, give it a star. And if your gratefulness needs another outlet, you can always buy me a coffee buy clicking the button below 😉
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M32WNJ5)
+
 
 ## Setup
 - Install [Processing](http://processing.org/).
