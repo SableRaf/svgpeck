@@ -10,6 +10,7 @@
 // - hatch fill
 // - variable strokeWeight (with hatch fill)
 // - undo part of a stroke (press undo and use the pen to define how much to remove, scrubbing up and down)
+// - double strokes and reverse strokes as options
 
 
 // CHANGELOG: 
