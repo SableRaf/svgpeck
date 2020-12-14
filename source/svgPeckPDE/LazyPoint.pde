@@ -1,5 +1,4 @@
-// https://github.com/dulnan/lazy-brush
-// Ported from: https://github.com/dulnan/lazy-brush/blob/master/src/LazyPoint.js
+// Ported from: https://github.com/dulnan/lazy-brush
 // https://www.reddit.com/r/javascript/comments/9paoyp/lazybrush_smooth_canvas_drawing_with_a_mouse_or/
 
 /* 
