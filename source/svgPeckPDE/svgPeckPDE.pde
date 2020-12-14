@@ -1,14 +1,24 @@
+<<<<<<< Updated upstream
 
 // Troubleshooting: 
 // The stroke does not start immediately when the Wacom pen is pressed but the mouse works fine.
+=======
+// Troubleshooting: //<>//
+// If the stroke does not start immediately when the Wacom pen is pressed but the mouse works fine.
+>>>>>>> Stashed changes
 // This is a Windows issue, uncheck "Use Windows Ink" in the Wacom Tablet Properties. 
 // The checkbox can be found at the bottom left of the "Mapping" tab.
 
 // TO DO
+<<<<<<< Updated upstream
+=======
+// - clear (undoable how?)
+>>>>>>> Stashed changes
 // - optimize drawing to only render new part of the stroke
 // - get rid of the draw loop (?)
 // - hatch fill
 // - variable strokeWeight (with hatch fill)
+// - brush styles (dotted lines, 
 // - undo part of a stroke (press undo and use the pen to define how much to remove, scrubbing up and down)
 // - double strokes and reverse strokes as options
 
