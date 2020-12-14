@@ -29,12 +29,12 @@
 
 import processing.svg.*;
 
-final float LAZY_RADIUS_MIN = 2.0;
+final float LAZY_RADIUS_MIN = 0.0;
 final float LAZY_RADIUS_MAX = 20.0;
-final int LAZY_RAMP = 20; // at which cursor velocity do we reach LAZY_RADIUS_MAX
-final float SMOOTHING_MIN = 0.1;
-final float SMOOTHING_MAX = 20.0;
-final int   SMOOTHING_RAMP = 20; // at which cursor velocity do we reach SMOOTHING_MAX
+final float LAZY_RAMP = 50.0; // at which cursor velocity do we reach LAZY_RADIUS_MAX
+final float SMOOTHING_MIN = 0.0;
+final float SMOOTHING_MAX = 0.0;
+final float SMOOTHING_RAMP = 1.0; // at which cursor velocity do we reach SMOOTHING_MAX
 final float STROKE_WEIGHT = 2;
 final float SCALE_MULTIPLIER = 3.0;
 final boolean LAZY_BRUSH = true;
