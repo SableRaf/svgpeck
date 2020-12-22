@@ -28,9 +28,11 @@ class WacomTablet {
 
   WacomPen pen;
 
-  boolean isWriting = false;
+  private boolean isWriting = false;
+  
+  private boolean isDetected = false;
 
-  float strip1Value, strip2Value;
+  private float strip1Value, strip2Value;
 
   /********************************************/
   /*          WACOMTABLET CONSTRUCTOR         */
@@ -43,6 +45,10 @@ class WacomTablet {
     pen.x = width/2;
     pen.y = height/2;
   }
+  
+  /********************************************/
+  /*                 METHODS                  */
+  /********************************************/
 
   private void addPoint(PVector newPoint) {
     points.add(newPoint);
@@ -58,7 +64,7 @@ class WacomTablet {
 
   public ArrayList<PVector> getPoints() {
     ArrayList<PVector> newPoints = points;
-    this.clearPoints();
+    //if(newPoints.size()>0) println(newPoints);
     return newPoints;
   }
 
@@ -66,11 +72,14 @@ class WacomTablet {
     return isWriting;
   }
   
+  public boolean isDetected() {
+    return isDetected;
+  }
+  
   public PVector getPosition() {
     return new PVector(this.pen.x, this.pen.y);
   }
   
-
   /********************************************/
   /*          WACOM EVENTS HANDLERS           */
   /********************************************/
@@ -101,11 +110,19 @@ class WacomTablet {
   }
 
   public void startWriting() {
+    println("WacomTablet.startWriting()");
     this.isWriting = true;
+    startDrawing(); // global function from the sketch
+  }
+  
+  public void write(PVector p) {
+    this.addPoint(p);
   }
 
   public void stopWriting() {
+    println("WacomTablet.stopWriting()");
     this.isWriting = false;
+    finishDrawing(); // global function from the sketch
   }
 
   /********************************************/
@@ -126,8 +143,8 @@ class WacomTablet {
 
   /* PEN */
   public void pen(float x, float y, float tiltX, float tiltY, float pressure) {
-    if (this.isWriting) {
-      addPoint(new PVector(x,y));
+    if (this.isWriting()) {
+      write(new PVector(x,y));
     }
     this.pen.x = x;
     this.pen.y = y;
@@ -148,8 +165,14 @@ class WacomTablet {
   /* TIP */
   public void penButton1(float btn) {
     int k = 9;
-    if (btn == 1.0) buttonPressed(k);
-    else if (btn == 0.0) buttonReleased(k);
+    if (btn == 1.0) {
+      buttonPressed(k); // global function from the sketch
+      this.startWriting();
+    }
+    else if (btn == 0.0) {
+      buttonReleased(k); // global function from the sketch
+      this.stopWriting();
+    }
   }
 
   /* DUOSWITCH */
@@ -177,8 +200,14 @@ class WacomTablet {
 
   public void eraserButton1(float btn) {
     int k = 12;
-    if (btn == 1.0) buttonPressed(k);
-    else if (btn == 0.0) buttonReleased(k);
+    if (btn == 1.0) {
+      buttonPressed(k);
+      this.startWriting();
+    }
+    else if (btn == 0.0) {
+      buttonReleased(k);
+      this.stopWriting();
+    }
   }
 
   /* ERASER PROXIMITY */

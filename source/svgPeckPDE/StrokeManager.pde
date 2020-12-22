@@ -4,7 +4,7 @@ class StrokeManager
   Stroke activeStroke;
   ArrayList<Stroke> strokeList;
   
-  final float DIST_THRESHOLD = 0.5; // defines how much the pointer need to move before we add a new point
+  final float DIST_THRESHOLD = 0.0; // defines how much the pointer need to move before we add a new point
 
   float smoothFactor = 0.0;
 
@@ -99,8 +99,7 @@ class StrokeManager
       //Stroke lastStroke = strokeList.get(i);
       
       int slidingAverageSize = 6;
-      
-      Boolean isBegin = this.activeStroke.points.size() < slidingAverageSize; // exclude the first few points
+      Boolean isBegin = this.getSize() < slidingAverageSize; // exclude the first few points
       
       PVector acc = new PVector(0.0,0.0); // accumulator
       

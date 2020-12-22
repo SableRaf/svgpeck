@@ -5,7 +5,7 @@ class Stroke
   int pointsAssigned = 0;              // amount of points currently in the Point array (acts as a cursor)                            
   float radiusDivide = 10;             // distance between current and next point / this = radius for first half of the stroke
   ArrayList<PVector> points;
-  float stepDistance = 0.0;           // higher value means smoother curve (TO DO correct edge effects for higher values)
+  float stepDistance = 0.1;           // higher value means smoother curve (TO DO correct edge effects for higher values)
   
 
   Stroke()
@@ -78,6 +78,7 @@ class Stroke
     {
       p = this.getPoint(i);
       float dist = dist(p.x, p.y, lastPointDrawn.x, lastPointDrawn.y);
+      println("drawing point at x:"+ p.x+" y:"+p.y);
       if(dist > stepDistance)
       {
         targetBuffer.curveVertex(p.x, p.y);

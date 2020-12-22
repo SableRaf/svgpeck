@@ -31,13 +31,13 @@
 import processing.svg.*;
 
 final float LAZY_RADIUS_MIN = 0.0;
-final float LAZY_RADIUS_MAX = 20.0;
-final float LAZY_RAMP = 50.0; // at which cursor velocity do we reach LAZY_RADIUS_MAX
+final float LAZY_RADIUS_MAX = 0.0;
+final float LAZY_RAMP = 1.0; // at which cursor velocity do we reach LAZY_RADIUS_MAX
 final float SMOOTHING_MIN = 0.0;
 final float SMOOTHING_MAX = 0.0;
 final float SMOOTHING_RAMP = 1.0; // at which cursor velocity do we reach SMOOTHING_MAX
 final float STROKE_WEIGHT = 2;
-final float SCALE_MULTIPLIER = 3.0;
+final float SCALE_MULTIPLIER = 1.0;
 final boolean LAZY_BRUSH = false;
 final boolean WACOM = true;
 
@@ -125,13 +125,22 @@ void draw() {
   this.strokes.setSmooth(map(cursorVelocity, 0.0, SMOOTHING_RAMP, SMOOTHING_MIN*SCALE_MULTIPLIER, SMOOTHING_MAX*SCALE_MULTIPLIER));
 
   if (WACOM) {
-    PVector penPos = tablet.getPosition();
-    superX = penPos.x;
-    superY = penPos.y;
+    //this.cursor.setActive(true);
+    //PVector penPos = tablet.getPosition();
+    //superX = penPos.x;
+    //superY = penPos.y;
+    
     ArrayList<PVector> newPoints = this.tablet.getPoints(); // get new positions since last frame
-    for (int i=0; i<newPoints.size(); i++) {
-      this.strokes.addPoint(newPoints.get(i));
+    if(newPoints.size()>0) {
+      for (int i=0; i<newPoints.size(); i++) {
+        PVector p = newPoints.get(i);
+        p.x = p.x * width;
+        p.y = (1.0 - p.y) * height;
+        this.strokes.addPoint(p);
+        println("added new point at x: "+ p.x+" y:"+p.y);
+      }
     }
+    tablet.clearPoints();
   }
 
   //if (isDrawing) 
@@ -197,8 +206,15 @@ void draw() {
   float screenRadius = lazyRadius / SCALE_MULTIPLIER;
   float screenBrushX = brush.x / SCALE_MULTIPLIER;
   float screenBrushY = brush.y / SCALE_MULTIPLIER;
-  float screenPointerX = pointer.x / SCALE_MULTIPLIER;
-  float screenPointerY = pointer.y / SCALE_MULTIPLIER;
+  float screenPointerX = 0.0;
+  float screenPointerY = 0.0;
+  if (WACOM) {
+    screenPointerX = this.tablet.getPosition().x * width;
+    screenPointerY = (1.0 - this.tablet.getPosition().y) * height;
+  } else {
+    screenPointerX = pointer.x / SCALE_MULTIPLIER;
+    screenPointerY = pointer.y / SCALE_MULTIPLIER;
+  }
 
   if (isDebug)
   { 
@@ -235,10 +251,11 @@ void draw() {
 
   lazy.reset();
 
-  noLoop();
+  //noLoop();
 }
 
 void startDrawing() {
+  println("startDrawing()");
   startX = this.lazy.getBrush().x;
   startY = this.lazy.getBrush().y;
   strokes.addStroke();
@@ -247,13 +264,14 @@ void startDrawing() {
 }
 
 void finishDrawing() {
+  println("finishDrawing()");
   isDrawing = false;
   lazy.disable();
 }
 
 void renderFrame()
 {
-  loop();
+  //loop();
   isRender = true;
 }
 
@@ -302,15 +320,15 @@ void fileSelected(File selection)
   }
 }
 
-void drawCursor(float _x, float _y, float _diameter)
-{
-  pushStyle();
-  blendMode(DIFFERENCE);
-  strokeWeight(1);
-  stroke(0);
-  circle(_x, _y, _diameter);
-  popStyle();
-}
+//void drawCursor(float _x, float _y, float _diameter)
+//{
+//  pushStyle();
+//  blendMode(DIFFERENCE);
+//  strokeWeight(1);
+//  stroke(0);
+//  circle(_x, _y, _diameter);
+//  popStyle();
+//}
 
 void keyPressed() {
   //renderFrame();
@@ -385,7 +403,7 @@ void mouseReleased() {
 
 void mouseMoved() {
   //renderFrame();
-  loop();
+  //loop();
 }
 
 /********************************************/
