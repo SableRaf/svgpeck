@@ -1,4 +1,4 @@
-// Troubleshooting:  //<>// //<>//
+// Troubleshooting: 
 // If the stroke does not start immediately when the Wacom pen is pressed but the mouse works fine.
 // This is a Windows issue, uncheck "Use Windows Ink" in the Wacom Tablet Properties. 
 // The checkbox can be found at the bottom left of the "Mapping" tab.
@@ -38,8 +38,7 @@ final float SMOOTHING_MAX = 0.0;
 final float SMOOTHING_RAMP = 1.0; // at which cursor velocity do we reach SMOOTHING_MAX
 final float STROKE_WEIGHT = 2;
 final float SCALE_MULTIPLIER = 3.0;
-final boolean LAZY_BRUSH = false;
-final boolean WACOM = true;
+final boolean LAZY_BRUSH = true;
 
 PGraphics pgr; // raster image 
 float magnifierScale = SCALE_MULTIPLIER*0.5; // super sampling multiplier
@@ -69,20 +68,15 @@ Cursor cursor;
 
 LazyBrush lazy;
 
-WacomOsc osc;
+Tablet wacom;
 String netAddress = "127.0.0.1";
 int listeningPort = 12000;
 int remotePort = 12000;
 
-WacomTablet tablet;
-
-void setup() { //<>//
+void setup() {
   size(1200, 1200, P2D);
   frameRate(60);
   noCursor();
-
-  tablet = new WacomTablet(this);
-  osc = new WacomOsc(tablet, netAddress, listeningPort, remotePort);
 
   this.strokes = new StrokeManager();
   this.timestamp = new TimestampFactory();
@@ -100,6 +94,9 @@ void setup() { //<>//
   this.lazy.setRadius(LAZY_RADIUS_MIN * this.SCALE_MULTIPLIER);
 
   this.strokes.setSmooth(SMOOTHING_MIN * this.SCALE_MULTIPLIER);
+  
+  wacom = new Tablet(netAddress, listeningPort, remotePort);
+  wacom.plugIntuos3();
 }
 
 void draw() {
@@ -124,28 +121,20 @@ void draw() {
 
   this.strokes.setSmooth(map(cursorVelocity, 0.0, SMOOTHING_RAMP, SMOOTHING_MIN*SCALE_MULTIPLIER, SMOOTHING_MAX*SCALE_MULTIPLIER));
 
-  if (WACOM) {
-    PVector penPos = tablet.getPosition();
-    superX = penPos.x;
-    superY = penPos.y;
-    ArrayList<PVector> newPoints = this.tablet.getPoints(); // get new positions since last frame
-    for (int i=0; i<newPoints.size(); i++) {
-      this.strokes.addPoint(newPoints.get(i));
-    }
-  }
+  if (isDrawing) 
+  { 
 
-  //if (isDrawing) 
-  //{ 
-  //  if (LAZY_BRUSH) { 
-  //    this.strokes.addPoint(new PVector(brush.x, brush.y));
-  //  } else { 
-  //    this.strokes.addPoint(new PVector(superX, superY));
-  //  }
-  //  this.cursor.setActive(true);
-  //} else
-  //{
-  //  this.cursor.setActive(false);
-  //}
+    if (LAZY_BRUSH) { 
+      this.strokes.addPoint(new PVector(brush.x, brush.y));
+    } else { 
+      this.strokes.addPoint(new PVector(mouseX, mouseY));
+    }
+
+    this.cursor.setActive(true);
+  } else
+  {
+    this.cursor.setActive(false);
+  }
 
   if (isRender) 
   {
@@ -386,81 +375,4 @@ void mouseReleased() {
 void mouseMoved() {
   //renderFrame();
   loop();
-}
-
-/********************************************/
-/*           WACOM BUTTON LISTENERS         */
-/********************************************/
-
-public void wacomButtonPressed(int btnIndex) {
-  println("button pressed: "+btnIndex);
-
-  switch (btnIndex) {
-  case Btn.L1:
-    break;
-  case Btn.L2:
-    break;
-  case Btn.L3:
-    break;
-  case Btn.L4:
-    break;
-  case Btn.R1:
-    break;
-  case Btn.R2:
-    break;
-  case Btn.R3:
-    break;
-  case Btn.R4:
-    break;
-  case Btn.TIP: 
-    break;
-  case Btn.SWITCH_BOTTOM:
-    break;
-  case Btn.SWITCH_TOP:
-    break;
-  case Btn.ERASER_TIP:
-    break;
-  case Btn.STRIP_LEFT:
-    break;
-  case Btn.STRIP_RIGHT:
-    break;
-  default:
-    println("invalid button index: " + btnIndex);
-  }
-}
-
-public void wacomButtonReleased(int btnIndex) {
-  println("button released: "+btnIndex);
-  switch (btnIndex) {
-  case Btn.L1:
-    break;
-  case Btn.L2:
-    break;
-  case Btn.L3:
-    break;
-  case Btn.L4:
-    break;
-  case Btn.R1:
-    break;
-  case Btn.R2:
-    break;
-  case Btn.R3:
-    break;
-  case Btn.R4:
-    break;
-  case Btn.TIP: 
-    break;
-  case Btn.SWITCH_BOTTOM:
-    break;
-  case Btn.SWITCH_TOP:
-    break;
-  case Btn.ERASER_TIP:
-    break;
-  case Btn.STRIP_LEFT:
-    break;
-  case Btn.STRIP_RIGHT:
-    break;
-  default:
-    println("invalid button index: " + btnIndex);
-  }
 }
