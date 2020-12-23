@@ -107,7 +107,7 @@ class StrokeManager
       {
         this.activeStroke.addPoint(p); // For the first few points, we just add one
       }
-      else 
+      else if (this.activeStroke.points.size()>0)
       {
         int minIndex = this.activeStroke.points.size() - slidingAverageSize;
         for(int index = this.activeStroke.points.size()-1; index > minIndex; index--)
