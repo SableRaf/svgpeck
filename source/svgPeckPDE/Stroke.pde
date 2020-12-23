@@ -35,7 +35,7 @@ class Stroke
     int size = points.size();
     if(size < 1)
     {
-      println("Error: Trying to getPoint() while the points ArrayList is empty. [millis:" + millis() +"]" );
+      println("Warning: Trying to getPoint() while the points ArrayList is empty. [millis:" + millis() +"]" );
       //exit();
     }
     else if (i < size)
@@ -44,7 +44,7 @@ class Stroke
     }
     else 
     {
-      println("Index out of bounds at getPoint(). points.size() : " + size + " index : " + i);
+      println("Error: Index out of bounds at getPoint(). points.size() : " + size + " index : " + i);
       exit();
     }
     return p;
