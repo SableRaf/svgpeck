@@ -75,6 +75,11 @@ int listeningPort = 12000;
 int remotePort = 12000;
 WacomTablet tablet;
 
+// My Intuos 3 has a drawing area of 210 x 162 mm 
+float tabletWidth = 210.0;
+float tabletHeight = 162.0;
+float tabletRatio = tabletHeight / tabletWidth; 
+
 void setup() {
   size(1200, 1200, P2D);
   frameRate(60);
@@ -132,6 +137,10 @@ void draw() {
     if (this.tablet.hasNewPoints()) {
       ArrayList<PVector> newPoints = this.tablet.getPoints(); // get new positions since last frame
       for (int i=0; i<newPoints.size(); i++) {
+        PVector tabletPos = newPoints.get(i);
+        PVector screenPos = tabletToCoord(tabletPos, new PVector(width,height));
+        this.strokes.addPoint(screenPos);
+        println("added new point at x: "+ screenPos.x+" y:"+screenPos.y);
       }
     }
     tablet.clearPoints();
@@ -198,6 +207,9 @@ void draw() {
   float screenPointerX = 0.0;
   float screenPointerY = 0.0;
   if (WACOM) {
+    PVector coord = tabletToCoord(this.tablet.getPosition(), new PVector(width,height));
+    screenPointerX = coord.x;
+    screenPointerY = coord.y;
   } else {
     screenPointerX = pointer.x / SCALE_MULTIPLIER;
     screenPointerY = pointer.y / SCALE_MULTIPLIER;
@@ -239,6 +251,14 @@ void draw() {
   lazy.reset();
 
   //noLoop();
+}
+
+PVector tabletToCoord(PVector source, PVector target) {
+  PVector coord = new PVector(0,0);
+  coord.x = (source.x * target.x) / tabletRatio;
+  coord.y = (1.0 - source.y) * target.y;
+  coord.x -= ( (target.x/tabletRatio) - target.y ) / 2; // center horizontally
+  return coord;
 }
 
 void startDrawing() {
