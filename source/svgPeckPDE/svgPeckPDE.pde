@@ -1,4 +1,4 @@
-// Troubleshooting:  //<>// //<>//
+// Troubleshooting:  //<>// //<>// //<>//
 // If the stroke does not start immediately when the Wacom pen is pressed but the mouse works fine.
 // This is a Windows issue, uncheck "Use Windows Ink" in the Wacom Tablet Properties. 
 // The checkbox can be found at the bottom left of the "Mapping" tab.
@@ -76,7 +76,7 @@ int remotePort = 12000;
 
 WacomTablet tablet;
 
-void setup() { //<>//
+void setup() {
   size(1200, 1200, P2D);
   frameRate(60);
   noCursor();
@@ -130,8 +130,10 @@ void draw() {
     //superX = penPos.x;
     //superY = penPos.y;
     
-    ArrayList<PVector> newPoints = this.tablet.getPoints(); // get new positions since last frame
-    if(newPoints.size()>0) {
+    
+
+    if (this.tablet.hasNewPoints()) {
+      ArrayList<PVector> newPoints = this.tablet.getPoints(); // get new positions since last frame
       for (int i=0; i<newPoints.size(); i++) {
         PVector p = newPoints.get(i);
         p.x = p.x * width;
@@ -141,6 +143,7 @@ void draw() {
       }
     }
     tablet.clearPoints();
+    drawScreen(pgr, SCALE_MULTIPLIER);
   }
 
   //if (isDrawing) 
@@ -155,12 +158,6 @@ void draw() {
   //{
   //  this.cursor.setActive(false);
   //}
-
-  if (isRender) 
-  {
-    drawScreen(pgr, SCALE_MULTIPLIER);
-    this.isRender = false;
-  }
 
   image(this.pgr, 0, 0, width, height);
 

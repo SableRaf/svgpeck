@@ -80,6 +80,10 @@ class WacomTablet {
     return new PVector(this.pen.x, this.pen.y);
   }
   
+  public boolean hasNewPoints() {
+    return (points.size()>0);
+  }
+  
   /********************************************/
   /*          WACOM EVENTS HANDLERS           */
   /********************************************/
@@ -110,17 +114,18 @@ class WacomTablet {
   }
 
   public void startWriting() {
-    println("WacomTablet.startWriting()");
+    //println("WacomTablet.startWriting()");
     this.isWriting = true;
     startDrawing(); // global function from the sketch
   }
   
   public void write(PVector p) {
     this.addPoint(p);
+    renderFrame(); // global function from the sketch
   }
 
   public void stopWriting() {
-    println("WacomTablet.stopWriting()");
+    //println("WacomTablet.stopWriting()");
     this.isWriting = false;
     finishDrawing(); // global function from the sketch
   }
