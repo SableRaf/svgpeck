@@ -482,8 +482,10 @@ public void wacomButtonReleased(int btnIndex) {
   case Btn.TIP: 
     break;
   case Btn.SWITCH_BOTTOM:
+    this.undo();
     break;
   case Btn.SWITCH_TOP:
+    this.redo();
     break;
   case Btn.ERASER_TIP:
     break;
