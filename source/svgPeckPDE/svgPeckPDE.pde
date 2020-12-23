@@ -138,9 +138,13 @@ void draw() {
       ArrayList<PVector> newPoints = this.tablet.getPoints(); // get new positions since last frame
       for (int i=0; i<newPoints.size(); i++) {
         PVector tabletPos = newPoints.get(i);
-        PVector screenPos = tabletToCoord(tabletPos, new PVector(width,height));
-        this.strokes.addPoint(screenPos);
-        println("added new point at x: "+ screenPos.x+" y:"+screenPos.y);
+        if (tabletPos != null) {
+          PVector screenPos = tabletToCoord(tabletPos, new PVector(width, height));
+          this.strokes.addPoint(screenPos);
+          println("added new point at x: "+ screenPos.x+" y:"+screenPos.y);
+        } else {
+          println("newPoints.get("+i+") returned null value");
+        }
       }
     }
     tablet.clearPoints();
@@ -206,9 +210,9 @@ void draw() {
   float screenBrushY = brush.y / SCALE_MULTIPLIER;
   float screenPointerX = 0.0;
   float screenPointerY = 0.0;
-    PVector coord = tabletToCoord(this.tablet.getPosition(), new PVector(width,height));
   
   if (USE_WACOM) {
+    PVector coord = tabletToCoord(this.tablet.getPosition(), new PVector(width, height));
     screenPointerX = coord.x;
     screenPointerY = coord.y;
   } else {
@@ -255,7 +259,7 @@ void draw() {
 }
 
 PVector tabletToCoord(PVector source, PVector target) {
-  PVector coord = new PVector(0,0);
+  PVector coord = new PVector(0, 0);
   coord.x = (source.x * target.x) / tabletRatio;
   coord.y = (1.0 - source.y) * target.y;
   coord.x -= ( (target.x/tabletRatio) - target.y ) / 2; // center horizontally
