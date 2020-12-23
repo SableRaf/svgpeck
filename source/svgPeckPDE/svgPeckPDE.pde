@@ -371,7 +371,7 @@ void keyReleased()
     } else if (key == 's') {
       this.isSaveSVG = true;
     } else if (key == 'd') {
-      this.isDebug = !this.isDebug;
+      toggleDebug();
     } else if (key == 'm') {
       this.showMagnifier = !this.showMagnifier;
     }
@@ -393,6 +393,11 @@ void undo()
 void redo()
 {
   strokes.redo();
+}
+
+void toggleDebug() 
+{
+  this.isDebug = !this.isDebug;
 }
 
 void mousePressed() {
@@ -462,6 +467,7 @@ public void wacomButtonReleased(int btnIndex) {
   case Btn.L2:
     break;
   case Btn.L3:
+    toggleDebug();
     break;
   case Btn.L4:
     break;
