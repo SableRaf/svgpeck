@@ -33,9 +33,9 @@ import processing.svg.*;
 final float LAZY_RADIUS_MIN = 0.0;
 final float LAZY_RADIUS_MAX = 0.0;
 final float LAZY_RAMP = 1.0; // at which cursor velocity do we reach LAZY_RADIUS_MAX
-final float SMOOTHING_MIN = 0.0;
-final float SMOOTHING_MAX = 0.0;
-final float SMOOTHING_RAMP = 1.0; // at which cursor velocity do we reach SMOOTHING_MAX
+final float SMOOTHING_MIN = 2.0;
+final float SMOOTHING_MAX = 10.0;
+final float SMOOTHING_RAMP = 8.0; // at which cursor velocity do we reach SMOOTHING_MAX
 final float STROKE_WEIGHT = 2;
 final float SCALE_MULTIPLIER = 1.0;
 final boolean LAZY_BRUSH = false;
@@ -73,7 +73,6 @@ WacomOsc osc;
 String netAddress = "127.0.0.1";
 int listeningPort = 12000;
 int remotePort = 12000;
-
 WacomTablet tablet;
 
 void setup() {
@@ -129,17 +128,10 @@ void draw() {
     //PVector penPos = tablet.getPosition();
     //superX = penPos.x;
     //superY = penPos.y;
-    
-    
 
     if (this.tablet.hasNewPoints()) {
       ArrayList<PVector> newPoints = this.tablet.getPoints(); // get new positions since last frame
       for (int i=0; i<newPoints.size(); i++) {
-        PVector p = newPoints.get(i);
-        p.x = p.x * width;
-        p.y = (1.0 - p.y) * height;
-        this.strokes.addPoint(p);
-        println("added new point at x: "+ p.x+" y:"+p.y);
       }
     }
     tablet.clearPoints();
@@ -206,8 +198,6 @@ void draw() {
   float screenPointerX = 0.0;
   float screenPointerY = 0.0;
   if (WACOM) {
-    screenPointerX = this.tablet.getPosition().x * width;
-    screenPointerY = (1.0 - this.tablet.getPosition().y) * height;
   } else {
     screenPointerX = pointer.x / SCALE_MULTIPLIER;
     screenPointerY = pointer.y / SCALE_MULTIPLIER;
