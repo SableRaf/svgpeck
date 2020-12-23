@@ -39,7 +39,7 @@ final float SMOOTHING_RAMP = 8.0; // at which cursor velocity do we reach SMOOTH
 final float STROKE_WEIGHT = 2;
 final float SCALE_MULTIPLIER = 1.0;
 final boolean LAZY_BRUSH = false;
-final boolean WACOM = true;
+final boolean USE_WACOM = true; // false is broken right now
 
 PGraphics pgr; // raster image 
 float magnifierScale = SCALE_MULTIPLIER*0.5; // super sampling multiplier
@@ -128,7 +128,7 @@ void draw() {
 
   this.strokes.setSmooth(map(cursorVelocity, 0.0, SMOOTHING_RAMP, SMOOTHING_MIN*SCALE_MULTIPLIER, SMOOTHING_MAX*SCALE_MULTIPLIER));
 
-  if (WACOM) {
+  if (USE_WACOM) {
     //this.cursor.setActive(true);
     //PVector penPos = tablet.getPosition();
     //superX = penPos.x;
@@ -206,8 +206,9 @@ void draw() {
   float screenBrushY = brush.y / SCALE_MULTIPLIER;
   float screenPointerX = 0.0;
   float screenPointerY = 0.0;
-  if (WACOM) {
     PVector coord = tabletToCoord(this.tablet.getPosition(), new PVector(width,height));
+  
+  if (USE_WACOM) {
     screenPointerX = coord.x;
     screenPointerY = coord.y;
   } else {
