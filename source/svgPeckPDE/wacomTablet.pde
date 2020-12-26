@@ -101,12 +101,14 @@ class WacomTablet {
   }
 
   public void penDetected(int state) {
+    this.isDetected = true;
     if (this.pen.detected == false) {
       this.pen.detected(state);
       println("Pen detected: " + this.pen.getStateName());
     }
   }
   public void penLost() {
+    this.isDetected = false;
     if (tablet.pen.detected == true) {
       println("Pen lost: " + this.pen.getStateName());
       this.pen.lost();
